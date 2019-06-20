@@ -40,7 +40,12 @@ Base HTML example of structure and additions to use Admin LTE.
         <!-- sidebar -->
         
         <div class="content-wrapper">
-            <!-- content -->
+            <div class="content-header">
+                <!-- header in container -->
+            </div>
+            <section class="content">
+                <!-- content in container-->
+            </section>
         </div>
         
         <!-- footer -->
