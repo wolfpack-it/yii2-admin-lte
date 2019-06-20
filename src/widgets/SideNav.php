@@ -15,6 +15,9 @@ use yii\helpers\ArrayHelper;
  */
 class SideNav extends Nav
 {
+    /**
+     * @var string
+     */
     public $dropdownClass = self::class;
 
     /**
@@ -38,6 +41,32 @@ class SideNav extends Nav
      * @var string
      */
     public $navType = 'nav-pills';
+
+    /**
+     * @param $items
+     * @return bool
+     */
+    protected function hasActiveChild($items): bool
+    {
+        foreach ($items as $i => $child) {
+            if (is_array($child) && !ArrayHelper::getValue($child, 'visible', true)) {
+                continue;
+            }
+            if ($this->isItemActive($child)) {
+                return true;
+            }
+            $childItems = ArrayHelper::getValue($child, 'items');
+            if (is_array($childItems)) {
+                $activeParent = false;
+                $this->isChildActive($childItems, $activeParent);
+                if ($activeParent) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 
     public function init()
     {
@@ -78,7 +107,7 @@ class SideNav extends Nav
             : Icon::show('circle', ArrayHelper::merge($iconOptions, $emptyIconOptions));
 
         if (empty($items)) {
-            $items = '';
+            $subMenu = '';
             $showSubmenu = '';
         } else {
             Html::addCssClass($options, ['has-treeview']);
@@ -90,7 +119,7 @@ class SideNav extends Nav
 
             if (is_array($items)) {
                 $items = $this->isChildActive($items, $active);
-                $items = $this->renderDropdown($items, $item);
+                $subMenu = $this->renderDropdown($items, $item);
             }
         }
 
@@ -105,7 +134,11 @@ class SideNav extends Nav
             Html::addCssClass($linkOptions, 'active');
         }
 
-        return Html::tag('li', Html::a($iconHtml . Html::tag('p', $label  . $showSubmenu), $url, $linkOptions) . $items, $options);
+        if (is_array($items) && $this->hasActiveChild($items)) {
+            Html::addCssClass($options, ['menu-open']);
+        }
+
+        return Html::tag('li', Html::a($iconHtml . Html::tag('p', $label  . $showSubmenu), $url, $linkOptions) . $subMenu, $options);
     }
 
     /**
