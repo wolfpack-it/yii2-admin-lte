@@ -47,6 +47,11 @@ class SideNavBar extends Widget
     public $options = [];
 
     /**
+     * @var array
+     */
+    public $brandImageOptions = [];
+
+    /**
      * @var string|bool the text of the brand or false if it's not used. Note that this is not HTML-encoded.
      * @see https://getbootstrap.com/docs/4.2/components/navbar/
      */
@@ -106,7 +111,7 @@ class SideNavBar extends Widget
 
         $brand = '';
         if ($this->brandImage !== false) {
-            $this->brandLabel = Html::img($this->brandImage);
+            $this->brandLabel = Html::img($this->brandImage, $this->brandImageOptions);
         }
         if ($this->brandLabel !== false) {
             Html::addCssClass($this->brandTextOptions, ['widget' => 'brand-text']);
