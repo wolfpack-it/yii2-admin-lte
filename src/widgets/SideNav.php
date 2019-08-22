@@ -102,10 +102,12 @@ class SideNav extends Nav
         $iconOptions = ArrayHelper::merge($this->iconOptions, $iconOptions);
         Html::addCssClass($iconOptions, 'nav-icon');
         $emptyIconOptions = ['style' => ['color' => 'transparent']];
-        $iconHtml = isset($item['icon'])
-            ? Icon::show($item['icon'], $iconOptions)
-            : Icon::show('circle', ArrayHelper::merge($iconOptions, $emptyIconOptions));
-
+        $iconHtml = ArrayHelper::getValue($item, 'iconHtml');
+        if (empty($iconHtml)) {
+            $iconHtml = isset($item['icon'])
+                ? Icon::show($item['icon'], $iconOptions)
+                : Icon::show('circle', ArrayHelper::merge($iconOptions, $emptyIconOptions));
+        }
         if (empty($items)) {
             $subMenu = '';
             $showSubmenu = '';
