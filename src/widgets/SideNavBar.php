@@ -107,11 +107,11 @@ class SideNavBar extends Widget
             Html::addCssClass($this->options, ['widget' => 'main-sidebar']);
         }
         $navOptions = $this->options;
-        $navTag = ArrayHelper::remove($navOptions, 'tag', 'aside');
+        $navTag = ArrayHelper::remove($navOptions, 'tag', 'aside') . "\n";
 
         $brand = '';
         if ($this->brandImage !== false) {
-            $this->brandLabel = Html::img($this->brandImage, $this->brandImageOptions);
+            $this->brandLabel = Html::img($this->brandImage, $this->brandImageOptions) . "\n";
         }
         if ($this->brandLabel !== false) {
             Html::addCssClass($this->brandTextOptions, ['widget' => 'brand-text']);
@@ -141,9 +141,9 @@ class SideNavBar extends Widget
      */
     public function run()
     {
-        echo Html::endTag('div');
+        echo Html::endTag('div') . "\n";
         $navTag = ArrayHelper::remove($this->options, 'tag', 'aside');
-        echo Html::endTag($navTag);
+        echo Html::endTag($navTag) . "\n";
         AdminLteBundle::register($this->getView());
     }
 }

@@ -171,9 +171,9 @@ class SideNav extends Nav
      */
     public function renderItems(): string
     {
-        $result = !$this->isSubMenu ? Html::beginTag('nav', ['class' => 'mt-2']) : '';
+        $result = (!$this->isSubMenu ? Html::beginTag('nav', ['class' => 'mt-2']) : '') . "\n";
         $result .= parent::renderItems();
-        $result .= !$this->isSubMenu ? Html::endTag('div') : '';
+        $result .= (!$this->isSubMenu ? Html::endTag('nav') : '') . "\n";
         return $result;
     }
 
