@@ -5,7 +5,7 @@
     "require": {
         "php": ">=7.1.0",
 
-        "almasaeed2010/adminlte": "3.0.0-beta-2",
+        "almasaeed2010/adminlte": "^3.0.2",
         "kartik-v/yii2-icons": "^1.4.5",
         "yiisoft/yii2-bootstrap4": "~2.0.1",
         "yiisoft/yii2": "~2.0.19"
