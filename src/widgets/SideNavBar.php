@@ -52,6 +52,11 @@ class SideNavBar extends Widget
     public $brandImageOptions = [];
 
     /**
+     * @var string
+     */
+    public $brand;
+
+    /**
      * @var string|bool the text of the brand or false if it's not used. Note that this is not HTML-encoded.
      * @see https://getbootstrap.com/docs/4.2/components/navbar/
      */
@@ -109,25 +114,29 @@ class SideNavBar extends Widget
         $navOptions = $this->options;
         $navTag = ArrayHelper::remove($navOptions, 'tag', 'aside') . "\n";
 
-        $brand = '';
-        if ($this->brandImage !== false) {
-            $this->brandLabel = Html::img($this->brandImage, $this->brandImageOptions) . "\n";
-        }
-        if ($this->brandLabel !== false) {
-            Html::addCssClass($this->brandTextOptions, ['widget' => 'brand-text']);
-            Html::addCssClass($this->brandLinkOptions, ['widget' => 'brand-link']);
-            if ($this->brandUrl === null) {
-                $brand = Html::a(
-                    Html::tag('span', $this->brandLabel, $this->brandTextOptions),
-                    '#',
-                    $this->brandLinkOptions
-                );
-            } else {
-                $brand = Html::a(
-                    Html::tag('span', $this->brandLabel, $this->brandTextOptions),
-                    $this->brandUrl === false ? \Yii::$app->homeUrl : $this->brandUrl,
-                    $this->brandLinkOptions
-                );
+        if (isset($this->brand)) {
+            $brand = $this->brand;
+        } else {
+            $brand = '';
+            if ($this->brandImage !== false) {
+                $this->brandLabel = Html::img($this->brandImage, $this->brandImageOptions) . "\n";
+            }
+            if ($this->brandLabel !== false) {
+                Html::addCssClass($this->brandTextOptions, ['widget' => 'brand-text']);
+                Html::addCssClass($this->brandLinkOptions, ['widget' => 'brand-link']);
+                if ($this->brandUrl === null) {
+                    $brand = Html::a(
+                        Html::tag('span', $this->brandLabel, $this->brandTextOptions),
+                        '#',
+                        $this->brandLinkOptions
+                    );
+                } else {
+                    $brand = Html::a(
+                        Html::tag('span', $this->brandLabel, $this->brandTextOptions),
+                        $this->brandUrl === false ? \Yii::$app->homeUrl : $this->brandUrl,
+                        $this->brandLinkOptions
+                    );
+                }
             }
         }
 
